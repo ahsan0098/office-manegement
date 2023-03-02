@@ -951,6 +951,7 @@
                 swal.fire(e.detail).then(function(f) {
                     $("#dept_form")[0].reset();
                     $("#sub_dept_form")[0].reset();
+                    $("#add_emp")[0].reset();
                 });
             });
             //  window.addEventListener('swal:confirmpay', function(e) {

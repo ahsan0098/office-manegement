@@ -35,71 +35,32 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>User</th>
-                                    <th>Date</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Salary</th>
+                                    <th>Department</th>
+                                    <th>Position</th>
                                     <th>Status</th>
-                                    <th>Reason</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>183</td>
-                                    <td>John Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="tag tag-success">Approved</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>219</td>
-                                    <td>Alexander Pierce</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="tag tag-warning">Pending</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>657</td>
-                                    <td>Bob Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="tag tag-primary">Approved</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>175</td>
-                                    <td>Mike Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="tag tag-danger">Denied</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>134</td>
-                                    <td>Jim Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="tag tag-success">Approved</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>494</td>
-                                    <td>Victoria Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="tag tag-warning">Pending</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>832</td>
-                                    <td>Michael Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="tag tag-primary">Approved</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>982</td>
-                                    <td>Rocky Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="tag tag-danger">Denied</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
+                                <div>
+                                    @foreach ($employe as $emp)
+                                        <tr>
+                                            <td>{{ $emp->id }}</td>
+                                            <td>{{ $emp->name }}</td>
+                                            <td>{{ $emp->email }}</td>
+                                            <td>{{ $emp->salary }}</td>
+                                            <td>Department name</td>
+                                            <td>position</td>
+                                            <td>Approved</td>
+                                        </tr>
+                                    @endforeach
+                                </div>
                             </tbody>
                         </table>
+                        {{-- <button wire:click.prevent="addEmploye">click me</button>
+                        {{ $test }} --}}
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -107,104 +68,129 @@
             </div>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+            aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content align self-center" style="width: 600px;">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Register new employe</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="card card-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">Date picker</h3>
-                            </div>
                             <div class="card-body">
-                                <!-- Date -->
-                                <div class="form-group">
-                                    <label>Date:</label>
-                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"
-                                            data-target="#reservationdate" />
-                                        <div class="input-group-append" data-target="#reservationdate"
-                                            data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                <form wire:submit.prevent="addEmploye">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Name</label>
+                                                <input type="text" name="emp_name" wire:model="emp_name"
+                                                    class="form-control" id="exampleInputEmail1"
+                                                    placeholder="Enter name">
+                                                @error('emp_name')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <!-- /.form-group -->
+                                            <!-- /.form-group -->
                                         </div>
-                                    </div>
-                                </div>
-                                <!-- Date and time -->
-                                <div class="form-group">
-                                    <label>Date and time:</label>
-                                    <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"
-                                            data-target="#reservationdatetime" />
-                                        <div class="input-group-append" data-target="#reservationdatetime"
-                                            data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        <!-- /.col -->
+                                        <div class="col-md-6">
+
+                                            <!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <input type="email" class="form-control" name="emp_mail"
+                                                    wire:model="emp_email" id="exampleInputEmail1"
+                                                    placeholder="Enter email">
+                                                @error('emp_email')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <!-- /.form-group -->
                                         </div>
-                                    </div>
-                                </div>
-                                <!-- /.form group -->
-                                <!-- Date range -->
-                                <div class="form-group">
-                                    <label>Date range:</label>
 
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="far fa-calendar-alt"></i>
-                                            </span>
+                                        <!-- /.col -->
+                                        <div class="col-md-6">
+
+                                            <!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Password</label>
+                                                <input type="text" class="form-control" name="emp_password"
+                                                    wire:model="emp_password" id="exampleInputEmail1"
+                                                    placeholder="Enter password">
+                                                @error('emp_password')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <!-- /.form-group -->
                                         </div>
-                                        <input type="text" class="form-control float-right" id="reservation">
-                                    </div>
-                                    <!-- /.input group -->
-                                </div>
-                                <!-- /.form group -->
-
-                                <!-- Date and time range -->
-                                <div class="form-group">
-                                    <label>Date and time range:</label>
-
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Deparment</label>
+                                                <select class="form-control select2" style="width: 100%;"
+                                                    name="emp_department" wire:model="emp_department"
+                                                    wire:click="changeEvent($event.target.value)">
+                                                    <option selected="selected">Select</option>
+                                                    <div>
+                                                        @foreach ($deps as $dp)
+                                                            <option value="{{ $dp->id }}">{{ $dp->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </div>
+                                                </select>
+                                                @error('emp_department')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
-                                        <input type="text" class="form-control float-right" id="reservationtime">
-                                    </div>
-                                    <!-- /.input group -->
-                                </div>
-                                <!-- /.form group -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Position</label>
+                                                <select class="form-control select2" style="width: 100%;"
+                                                    name="emp_position" wire:model="emp_position">
+                                                    <option selected="selected"></option>
+                                                    <div>
+                                                        @foreach ($sub_deps as $sd)
+                                                            <option value="{{ $sd->id }}">{{ $sd->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </div>
+                                                </select>
+                                                @error('emp_position')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
 
-                                <!-- Date and time range -->
-                                <div class="form-group">
-                                    <label>Date range button:</label>
-
-                                    <div class="input-group">
-                                        <button type="button" class="btn btn-default float-right" id="daterange-btn">
-                                            <i class="far fa-calendar-alt"></i> Date range picker
-                                            <i class="fas fa-caret-down"></i>
-                                        </button>
+                                            <!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Salary</label>
+                                                <input type="text" class="form-control" name="emp_salary"
+                                                    wire:model="emp_salary" id="exampleInputEmail1"
+                                                    placeholder="Enter salary">
+                                                @error('emp_salary')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <!-- /.form-group -->
+                                        </div>
+                                        <!-- /.row -->
+                                        <!-- /.row -->
                                     </div>
-                                </div>
-                                <!-- /.form group -->
+                                    <!-- /.card-body -->
                             </div>
-                            <div class="card-footer">
-                                Visit <a href="https://getdatepicker.com/5-4/">tempusdominus </a> for more examples and
-                                information about
-                                the plugin.
-                            </div>
-                            <!-- /.card-body -->
+                            <!-- /.card -->
                         </div>
-                        <!-- /.card -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Regiter</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

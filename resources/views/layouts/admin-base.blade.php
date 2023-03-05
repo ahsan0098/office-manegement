@@ -214,7 +214,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item menu-open">
-                            <a href="{{ route('dashboard') }}" class="nav-link active">
+                            <a href="{{ route('adminDashboard') }}" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
@@ -475,6 +475,15 @@
                                     </a>
                                 </li>
                             </ul> --}}
+                        </li>
+                        <li>
+                            <a href="{{ route('index') }}" class="nav-link active">
+                                <i class="bi bi-box-arrow-left"></i>
+                                <p>
+                                    Logout
+                                    {{-- <i class="right fas fa-angle-left"></i> --}}
+                                </p>
+                            </a>
                         </li>
                         {{-- <li class="nav-header">EXAMPLES</li>
                         <li class="nav-item">
@@ -925,6 +934,10 @@
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
+            $(document).on('keyup', "#search_btn", function(e) {
+                var txt = $(this).val();
+                window.livewire.emit('search');
+            });
             // $(document).on('click', '.cat-delete', function() {
             //     Swal.fire({
             //         title: 'Are you sure?',
@@ -952,15 +965,25 @@
                     $("#dept_form")[0].reset();
                     $("#sub_dept_form")[0].reset();
                     $("#add_emp")[0].reset();
+                    $("#edit_emp")[0].reset();
+                    chatbox.classList.toggle("active");
                 });
             });
-            //  window.addEventListener('swal:confirmpay', function(e) {
-            //         swal.fire(e.detail).then((result) => {
-            //             if (result.isConfirmed) {
-            //                 window.livewire.emit('stripePay');
-            //             }
-            //         });
-            //     });
+            window.addEventListener('swal:add_employes', function(e) {
+                swal.fire(e.detail).then(function(f) {
+                    $("#add_emp")[0].reset();
+                    // $("#add_employe").classList.toggle("fade");
+                });
+            });
+            window.addEventListener('swal:confirmDelete', function(e) {
+                swal.fire(e.detail).then((result) => {
+                    if (result.isConfirmed) {
+                        window.livewire.emit('deleteEmp', e.detail.id);
+                    }
+                }).catch(err => {
+                    console.log(err);
+                });
+            });
         </script>
 
         @livewireScripts

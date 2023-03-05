@@ -12,4 +12,8 @@ class department extends Model
     {
         return $this->hasMany(subdepartment::class, 'dep_id');
     }
+    // public function user()
+    // {
+    //     return $this->hasMany(User::class, 'id');
+    // }
 }
